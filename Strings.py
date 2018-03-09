@@ -1,0 +1,35 @@
+prefix_matcher = '[#:]'
+uri_matcher = 'https?://'
+property_matcher = '[0-9A-z_-]+$'
+name_matcher = '[A-z_-]+$'
+word_matcher = '[A-Za-z]*$'
+
+contains = 'contains'
+one_of = 'one_of'
+collection = 'collection'
+
+text_key = '#text'
+
+rdf_resource_key = '@rdf:resource'
+uid_about_key = '@rdf:about'
+rdf_datatype_key = '@rdf:datatype'
+
+rdf_first_key = 'rdf:first'
+rdf_rest_key = 'rdf:rest'
+rdf_description_key = 'rdf:Description'
+
+rdfs_domain_key = 'rdfs:domain'
+rdfs_range_key = 'rdfs:range'
+rdfs_sub_class_of_key = 'rdfs:subClassOf'
+rdfs_datatype_key = 'rdfs:Datatype'
+
+owl_one_of_key = 'owl:oneOf'
+owl_union_of_key = 'owl:unionOf'
+owl_class_key = 'owl:Class'
+owl_some_values_from_key = 'owl:someValuesFrom'
+owl_restriction_key = 'owl:Restriction'
+owl_has_value_key = 'owl:hasValue'
+owl_on_property_key = 'owl:onProperty'
+owl_annotation_property_key = 'owl:AnnotationProperty'
+owl_object_property_key = 'owl:ObjectProperty'
+owl_datatype_property_key = 'owl:DatatypeProperty'
