@@ -1,4 +1,5 @@
 import gzip
+import csv
 import json
 import os
 import xmltodict
@@ -10,6 +11,19 @@ def write_dict_gz(dictionary, namespace):
     with gzip.GzipFile(get_file_path(namespace, 'dict.gz'), 'wb') as file:
         dict_to_json = json.dumps(dictionary)
         file.write(bytes(dict_to_json, 'utf-8'))
+        elapsed_time = datetime.now() - start_time
+        print('write time: {} for {}'.format(elapsed_time, namespace))
+
+
+def write_csv(dataset, namespace, header_array):
+    start_time = datetime.now()
+    with open(get_file_path(namespace, 'csv'), 'w') as file:
+        writer = csv.writer(file, quoting=csv.QUOTE_ALL)
+        writer.writerow(header_array)
+        for item in dataset:
+            if type(item) is str:
+                item = [item]
+            writer.writerow(item)
         elapsed_time = datetime.now() - start_time
         print('write time: {} for {}'.format(elapsed_time, namespace))
 

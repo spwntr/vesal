@@ -44,6 +44,9 @@ print('Added {} items.\nAdded {} properties.\nDid not process {} properties.'
       .format(len(items_to_create), len(properties_to_create), unprocessed_properties_count))
 print('')
 
+DataIO.write_csv(items_to_create, 'nodes', ['Item'])
+DataIO.write_csv(properties_to_create, 'properties', ['Subject', 'Predicate', 'Object'])
+
 """
 all
 process time: 0:00:35.987963
