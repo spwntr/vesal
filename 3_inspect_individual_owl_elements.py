@@ -40,11 +40,11 @@ for element in elements:
         distinct_keys.add(key)
         print(element[tag_rdf]) if dict(element).__contains__(tag_rdf) \
             else print(element)
-    if key.__eq__(tag_sub_class_of):
-        nested_sub_class_of = element[tag_sub_class_of]
-        if len(nested_sub_class_of).__eq__(1):
-            nested_distinct_keys.add(list(nested_sub_class_of.keys())[0])
-        else:
-            for nested_sub_class in nested_sub_class_of:
-                nested_distinct_keys.add(list(nested_sub_class.keys())[0])
+        if key.__eq__(tag_sub_class_of):
+            nested_sub_class_of = element[tag_sub_class_of]
+            if len(nested_sub_class_of).__eq__(1):
+                nested_distinct_keys.add(list(nested_sub_class_of.keys())[0])
+            else:
+                for nested_sub_class in nested_sub_class_of:
+                    nested_distinct_keys.add(list(nested_sub_class.keys())[0])
 print('s')
