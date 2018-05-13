@@ -15,9 +15,9 @@ def write_dict_gz(dictionary, namespace):
         print('write time: {} for {}'.format(elapsed_time, namespace))
 
 
-def write_csv(dataset, namespace, header_array):
+def write_csv(dataset, namespace, header_array, sorted=False):
     start_time = datetime.now()
-    with open(get_file_path(namespace, 'csv'), 'w') as file:
+    with open(get_file_path(namespace, 'csv', sorted), 'w') as file:
         writer = csv.writer(file, quoting=csv.QUOTE_ALL)
         writer.writerow(header_array)
         for item in dataset:
@@ -53,8 +53,8 @@ def write_fma_components(fma, parent, namespace_array):
         write_dict_gz(fma[parent][namespace], namespace)
 
 
-def get_file_path(name, file_type):
-    return os.getcwd() + '/data/%s.%s' % (format_namespace_for_filename(name), file_type)
+def get_file_path(name, file_type, sorted=False):
+    return os.getcwd() + '/data%s/%s.%s' % ('/sorted' if sorted else '', format_namespace_for_filename(name), file_type)
 
 
 def format_namespace_for_filename(namespace):

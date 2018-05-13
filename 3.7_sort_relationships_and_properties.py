@@ -7,7 +7,8 @@ import Strings
 
 
 # elements = DataIO.get_dict_gz_as_json(Strings.owl_class_key)
-elements = DataIO.get_dict_gz_as_json(Strings.owl_object_property_key)
+data_key = Strings.owl_class_key
+elements = DataIO.get_dict_gz_as_json(data_key)
 # elements = elements[10110:10150]
 
 unprocessed_properties_count = 0
@@ -45,39 +46,16 @@ print('Added {} items.\nAdded {} properties.\nDid not process {} properties.'
       .format(len(items_to_create), len(properties_to_create), unprocessed_properties_count))
 print('')
 
-DataIO.write_csv(items_to_create, 'obj_pro_nodes', ['Item'])
-DataIO.write_csv(properties_to_create, 'obj_pro_properties', ['Subject', 'Predicate', 'Object'])
 
-"""
-all
-process time: 0:00:35.987963
-Added 104523 items.
-Added 671317 properties.
-Did not process 1983 properties.
-"""
+def sort_properties(properties_to_create):
+    sorted_data = {}
+    for triplet in properties_to_create:
+        if not sorted_data.keys().__contains__(triplet[1]):
+            sorted_data[triplet[1]] = set()
+        sorted_data[triplet[1]].add((triplet[0], triplet[2]))
+    return sorted_data
 
-"""
-Data structure
 
-Classes
-+ contains all 3 subClassOf has Class:IntersectionOf
-elements = elements[2380:2383]
-
-+ contains all 2 FMAIDs as lists
-elements = elements[51787:51789]
-elements = elements[51902:51904]
-
-fma14197	key: definition processing returned value: 		{'@rdf:datatype': 'http://www.w3.org/2001/XMLSchema#string'}
-fma0325915	key: preferred_name processing returned value: 		{'@rdf:datatype': 'http://www.w3.org/2001/XMLSchema#string'}
-fma0326951	key: rdfs:comment processing returned value: 		{'@rdf:datatype': 'http://www.w3.org/2001/XMLSchema#string'}
-fma321270	key: FMAID processing returned value: 		[{'@rdf:datatype': 'http://www.w3.org/2001/XMLSchema#integer', '#text': '321270'}, {'@rdf:datatype': 'http://www.w3.org/2001/XMLSchema#string', '#text': 'Space of L5-S1 intervertebral compartment'}]
-fma322277	key: preferred_name processing returned value: 		{'@rdf:datatype': 'http://www.w3.org/2001/XMLSchema#string'}
-fma322603	key: preferred_name processing returned value: 		{'@rdf:datatype': 'http://www.w3.org/2001/XMLSchema#string'}
-
-ObjectProperty (about is equivalent to label except as below)
-+ branch__continuity_ for '@rdf:about' value has extra '_' between words and trailing '_' and for 'en' label has extra ' ' between words 
-+ tributary__continuity_ for '@rdf:about' value has extra '_' between words and trailing '_' and for 'en' label has extra ' ' between words
-
-+ 'matures from' has two '@xml:lang':'en', '#text':'*' labels, a) 'matures_from' b) 'matures from'
-+ 'matures into' has two '@xml:lang':'en', '#text':'*' labels, a) 'matures_into' b) 'matures into'
-"""
+sorted_data = sort_properties(properties_to_create)
+for handle in sorted_data.keys():
+    DataIO.write_csv(sorted_data[handle], data_key + '.' + handle, ['Subject', 'Object'], True)
